@@ -97,6 +97,14 @@ public class MainMenu extends javax.swing.JFrame {
         jPanelProductos.repaint();
 
     }
+    public void reloadProductos(){
+        jScrollPaneProductos.setVisible(true);
+        jPanelProductoSeleccionado.setVisible(false);
+        String textoBusqueda = jTextFieldBusqueda.getText();
+        String metodoBusqueda = jComboBoxTipoBusqueda.getSelectedItem().toString();
+        categoriasSeleccionadas = jListCategorias.getSelectedValuesList();
+        mostrarProductos(Manager.BuscarProductos(textoBusqueda, categoriasSeleccionadas, metodoBusqueda));
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -440,18 +448,12 @@ public class MainMenu extends javax.swing.JFrame {
 
     private void jButtonBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBusquedaActionPerformed
         // TODO add your handling code here:
-        jScrollPaneProductos.setVisible(true);
-        jScrollPaneCategorias.setVisible(false);
-        String textoBusqueda = jTextFieldBusqueda.getText();
-        String metodoBusqueda = jComboBoxTipoBusqueda.getSelectedItem().toString();
-        categoriasSeleccionadas = jListCategorias.getSelectedValuesList();
-        mostrarProductos(Manager.BuscarProductos(textoBusqueda, categoriasSeleccionadas, metodoBusqueda));
+        reloadProductos();
     }//GEN-LAST:event_jButtonBusquedaActionPerformed
 
     private void jButtonVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVolverActionPerformed
         // TODO add your handling code here:
-        jScrollPaneProductos.setVisible(true);
-        jPanelProductoSeleccionado.setVisible(false);
+        reloadProductos();
     }//GEN-LAST:event_jButtonVolverActionPerformed
 
     /**

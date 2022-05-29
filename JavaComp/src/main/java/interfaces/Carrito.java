@@ -2,6 +2,7 @@ package interfaces;
 
 import classes.Cliente;
 import classes.Producto;
+import classes.UtilProducto;
 import classes.UtilRegistro;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +13,7 @@ import javax.swing.ListModel;
 public class Carrito extends javax.swing.JDialog {
 
     private Cliente clienteActual;
-
+    private java.awt.Frame Parent;
     /**
      * Creates new form Carrito
      */
@@ -21,6 +22,7 @@ public class Carrito extends javax.swing.JDialog {
         initComponents();
         clienteActual = Login.objcli;
         mostrarProductos();
+        Parent = parent;
     }
 
     public void mostrarProductos() {
@@ -167,27 +169,44 @@ public class Carrito extends javax.swing.JDialog {
             eliminables.add(carrito.get(productosSeleccionados[i]));
         }
         for (Producto producto : eliminables) {
+            String[] separacion = producto.getTitulo().split("x");
+            int unidades = Integer.parseInt(separacion[1]);
+            String nombre = separacion[0];
+            for (int i = 0; i < UtilProducto.getProductos().size(); i++) {
+                if(UtilProducto.getProductos().get(i).getTitulo().equals(nombre)){
+                    UtilProducto.getProductos().get(i).setStock(UtilProducto.getProductos().get(i).getStock()+unidades);
+                }
+            }
             clienteActual.removeFromCarrito(producto);
             
         }
+        
         mostrarProductos();
         UtilRegistro.guardarDatos();
+        ((MainMenu) Parent).reloadProductos();
     }//GEN-LAST:event_jButtonEliminarSeleccionActionPerformed
 
     private void jListProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListProductosMouseClicked
         // TODO add your handling code here:
-
-        for (int i = 0; i < jListProductos.getSelectedIndices().length; i++) {
-            System.out.println(jListProductos.getSelectedIndices()[i]);
-        }
     }//GEN-LAST:event_jListProductosMouseClicked
 
     private void jButtonVaciarCarritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVaciarCarritoActionPerformed
         // TODO add your handling code here:
-        ArrayList<Producto> carrito = clienteActual.getCarrito();
+         ArrayList<Producto> carrito = clienteActual.getCarrito();
+         for (Producto producto : carrito) {
+            String[] separacion = producto.getTitulo().split("x");
+            int unidades = Integer.parseInt(separacion[1]);
+            String nombre = separacion[0];
+            for (int i = 0; i < UtilProducto.getProductos().size(); i++) {
+                if(UtilProducto.getProductos().get(i).getTitulo().equals(nombre)){
+                    UtilProducto.getProductos().get(i).setStock(UtilProducto.getProductos().get(i).getStock()+unidades);
+                }
+            }
+        }
         carrito.clear();
         mostrarProductos();
         UtilRegistro.guardarDatos();
+        ((MainMenu) Parent).reloadProductos();
 
     }//GEN-LAST:event_jButtonVaciarCarritoActionPerformed
 

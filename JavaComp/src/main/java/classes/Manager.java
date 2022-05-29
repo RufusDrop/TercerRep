@@ -59,7 +59,10 @@ public class Manager {
         return productosAMostrar;
 
     }
-
+    /**
+     * @param productosAOrdenar
+     * @return 
+     */
     public static ArrayList<Producto> ordenarProductosPorRelevancia(ArrayList<Producto> productosAOrdenar) {
         //Comparador para ordenar los clientes por su nombre
         Comparator NomCliComp = new Comparator() {
