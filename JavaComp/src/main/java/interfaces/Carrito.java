@@ -4,6 +4,9 @@ import classes.Cliente;
 import classes.Producto;
 import classes.UtilProducto;
 import classes.UtilRegistro;
+import classes.Venta;
+import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
@@ -14,6 +17,7 @@ public class Carrito extends javax.swing.JDialog {
 
     private Cliente clienteActual;
     private java.awt.Frame Parent;
+
     /**
      * Creates new form Carrito
      */
@@ -46,6 +50,40 @@ public class Carrito extends javax.swing.JDialog {
         jListProductos.setModel(listModel);
         jLabelPrecioTotalValor.setText(String.valueOf(suma) + "€");
 
+    }
+    public void comprar(){
+        ArrayList<Producto> carrito = clienteActual.getCarrito();
+        double precio = 0;
+        ArrayList<String> productoAMostrar = new ArrayList<String>();
+        Cliente comprador = Login.objcli;
+        LocalDate fecha = LocalDate.now();
+        for (int i = 0; i < clienteActual.getCarrito().size(); i++) {
+            String[] separacion = clienteActual.getCarrito().get(i).getTitulo().split("x");
+            int unidades = Integer.parseInt(separacion[1]);
+            String nombre = separacion[0];
+            precio += clienteActual.getCarrito().get(i).getPrecio() * unidades;
+            productoAMostrar.add(clienteActual.getCarrito().get(i).getTitulo() + " (" + clienteActual.getCarrito().get(i).getPrecio() * unidades + "€)");
+        }
+        
+        
+        Venta venta = new Venta(productoAMostrar, precio, comprador, fecha);
+        if (comprador.getTarjeta() != null) {
+            if (UtilProducto.altaVenta(venta)) {
+                JOptionPane.showMessageDialog(this, "Compra realizada con exito", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+                carrito.clear();
+                mostrarProductos();
+                ((MainMenu) Parent).reloadProductos();
+                UtilRegistro.guardarDatos();
+                UtilProducto.guardarDatosVentas();
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Excepcion al comprar", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+            }
+            
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "El cliente no ha asignado aun la tarjeta", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 
     /**
@@ -173,14 +211,14 @@ public class Carrito extends javax.swing.JDialog {
             int unidades = Integer.parseInt(separacion[1]);
             String nombre = separacion[0];
             for (int i = 0; i < UtilProducto.getProductos().size(); i++) {
-                if(UtilProducto.getProductos().get(i).getTitulo().equals(nombre)){
-                    UtilProducto.getProductos().get(i).setStock(UtilProducto.getProductos().get(i).getStock()+unidades);
+                if (UtilProducto.getProductos().get(i).getTitulo().equals(nombre)) {
+                    UtilProducto.getProductos().get(i).setStock(UtilProducto.getProductos().get(i).getStock() + unidades);
                 }
             }
             clienteActual.removeFromCarrito(producto);
-            
+
         }
-        
+
         mostrarProductos();
         UtilRegistro.guardarDatos();
         ((MainMenu) Parent).reloadProductos();
@@ -192,14 +230,14 @@ public class Carrito extends javax.swing.JDialog {
 
     private void jButtonVaciarCarritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVaciarCarritoActionPerformed
         // TODO add your handling code here:
-         ArrayList<Producto> carrito = clienteActual.getCarrito();
-         for (Producto producto : carrito) {
+        ArrayList<Producto> carrito = clienteActual.getCarrito();
+        for (Producto producto : carrito) {
             String[] separacion = producto.getTitulo().split("x");
             int unidades = Integer.parseInt(separacion[1]);
             String nombre = separacion[0];
             for (int i = 0; i < UtilProducto.getProductos().size(); i++) {
-                if(UtilProducto.getProductos().get(i).getTitulo().equals(nombre)){
-                    UtilProducto.getProductos().get(i).setStock(UtilProducto.getProductos().get(i).getStock()+unidades);
+                if (UtilProducto.getProductos().get(i).getTitulo().equals(nombre)) {
+                    UtilProducto.getProductos().get(i).setStock(UtilProducto.getProductos().get(i).getStock() + unidades);
                 }
             }
         }
@@ -212,6 +250,9 @@ public class Carrito extends javax.swing.JDialog {
 
     private void jButtonComprarTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonComprarTodoActionPerformed
         // TODO add your handling code here:
+        comprar();
+
+
     }//GEN-LAST:event_jButtonComprarTodoActionPerformed
 
     /**

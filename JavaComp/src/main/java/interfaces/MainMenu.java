@@ -29,6 +29,8 @@ public class MainMenu extends javax.swing.JFrame {
         categoriasSeleccionadas = jListCategorias.getSelectedValuesList();
         this.setLocationRelativeTo(null); //Esta linea se pone para que la ventana salga centrada.
         jScrollPaneCategorias.setVisible(false);
+        
+        reloadProductos();
         ///////Look and feel
         try {
             javax.swing.UIManager.setLookAndFeel(new FlatDarkLaf());
@@ -134,8 +136,6 @@ public class MainMenu extends javax.swing.JFrame {
         jScrollPaneProductos = new javax.swing.JScrollPane();
         jPanelProductos = new javax.swing.JPanel();
         jLabelErrorBusqueda = new javax.swing.JLabel();
-        jPanelRecomendaciones = new javax.swing.JPanel();
-        jLabelMainText = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -358,29 +358,6 @@ public class MainMenu extends javax.swing.JFrame {
 
         jLayeredPaneMain.add(jScrollPaneProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 1370, 690));
 
-        jLabelMainText.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabelMainText.setText("Buenos días, estas son algunas recomendaciones para ti:");
-        jLabelMainText.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-
-        javax.swing.GroupLayout jPanelRecomendacionesLayout = new javax.swing.GroupLayout(jPanelRecomendaciones);
-        jPanelRecomendaciones.setLayout(jPanelRecomendacionesLayout);
-        jPanelRecomendacionesLayout.setHorizontalGroup(
-            jPanelRecomendacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelRecomendacionesLayout.createSequentialGroup()
-                .addGap(52, 52, 52)
-                .addComponent(jLabelMainText, javax.swing.GroupLayout.PREFERRED_SIZE, 799, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(519, Short.MAX_VALUE))
-        );
-        jPanelRecomendacionesLayout.setVerticalGroup(
-            jPanelRecomendacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelRecomendacionesLayout.createSequentialGroup()
-                .addGap(72, 72, 72)
-                .addComponent(jLabelMainText)
-                .addContainerGap(493, Short.MAX_VALUE))
-        );
-
-        jLayeredPaneMain.add(jPanelRecomendaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 1370, 590));
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -508,7 +485,6 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jComboBoxTipoBusqueda;
     private javax.swing.JLabel jLabelCorreoElectronico;
     private javax.swing.JLabel jLabelErrorBusqueda;
-    private javax.swing.JLabel jLabelMainText;
     private javax.swing.JLabel jLabelNombreCuenta;
     private javax.swing.JLayeredPane jLayeredPaneMain;
     private javax.swing.JList<String> jListCategorias;
@@ -516,7 +492,6 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelCuenta;
     private javax.swing.JPanel jPanelProductoSeleccionado;
     private javax.swing.JPanel jPanelProductos;
-    private javax.swing.JPanel jPanelRecomendaciones;
     private javax.swing.JScrollPane jScrollPaneCategorias;
     private javax.swing.JScrollPane jScrollPaneProductos;
     private javax.swing.JTextField jTextFieldBusqueda;

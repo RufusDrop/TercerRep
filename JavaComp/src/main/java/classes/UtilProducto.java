@@ -1,5 +1,6 @@
 package classes;
 
+import interfaces.Login;
 import java.io.*;
 import java.time.LocalDate;
 import java.util.*;
@@ -166,6 +167,80 @@ public class UtilProducto {
         return productoActual.getOpiniones().get(indice);
     }
 
+    
+    private static ArrayList<Venta> ventas = new ArrayList<Venta>();
+    public static Venta ventaActual;
+    
+    
+    
+    
+    /**
+     * Establece el ArrayList de productos
+     *
+     * @param v
+     */
+    public static void setVentas(ArrayList<Venta> v) {
+        ventas = v;
+    }
+
+    /**
+     * @return Devuelve el ArrayList de productos
+     */
+    public static ArrayList<Venta> getVentas() {
+        //Comparador para ordenar los clientes por su nombre
+        Comparator NomCliComp = new Comparator() {
+
+            @Override
+            public int compare(Object o1, Object o2) {
+                Venta p1 = (Venta) o1;
+                Venta p2 = (Venta) o2;
+                return p1.getFechaCompra().compareTo(p2.getFechaCompra());
+            }
+        };
+        //Ordenamos el array
+        Collections.sort(ventas, NomCliComp);
+        return ventas;
+    }
+
+    /**
+     * Da de alta un venta
+     *
+     * @param objcli
+     * @return boolean
+     */
+    public static boolean altaVenta(Venta objventa) {
+        if (!ventas.contains(objventa)) {
+            ventas.add(objventa);
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    public static boolean bajaVenta(Venta objventa) {
+        if (ventas.contains(objventa)) {
+            ventas.remove(objventa);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Devuelve una venta por la posición dentro del ArrayList
+     *
+     * @param indice
+     * @return objventa
+     */
+    public static Venta consultaVenta(int indice) {
+        return ventas.get(indice);
+    }
+
+    
+    
+    
+    
     /**
      * Carga los datos de productos del fichero
      */
@@ -186,7 +261,7 @@ public class UtilProducto {
     }//fin cargarDatos
 
     /**
-     * Guarda los datos de personas en el fichero
+     * Guarda los datos de productos en el fichero
      */
     public static void guardarDatos() {
         try {
@@ -209,6 +284,49 @@ public class UtilProducto {
             System.out.println("Error de IO: " + ioe.getMessage());
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
+        }
+    }//fin guardarDatos
+    
+    public static void cargarDatosVentas() {
+        try {
+            //Lectura de los objetos de tipo persona
+            FileInputStream istreamCli = new FileInputStream("copiasegVentas.dat");
+            ObjectInputStream oisCli = new ObjectInputStream(istreamCli);
+            ventas = (ArrayList) oisCli.readObject();
+            istreamCli.close();
+        } catch (IOException ioe) {
+            System.out.println("Error de IO: " + ioe.getMessage());
+        } catch (ClassNotFoundException cnfe) {
+            System.out.println("Error de clase no encontrada: " + cnfe.getMessage());
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }//fin cargarDatos
+
+    /**
+     * Guarda los datos de productos en el fichero
+     */
+    public static void guardarDatosVentas() {
+        try {
+            //Si hay datos los guardamos...
+            if (!ventas.isEmpty()) {
+                /**
+                 * **** Serialización de los objetos *****
+                 */
+                //Serialización de las personas
+                FileOutputStream ostreamCli = new FileOutputStream("copiasegVentas.dat");
+                ObjectOutputStream oosCli = new ObjectOutputStream(ostreamCli);
+                //guardamos el array de personas
+                oosCli.writeObject(ventas);
+                ostreamCli.close();
+            } else {
+                System.out.println("Error: No hay datos...");
+            }
+
+        } catch (IOException ioe) {
+            System.out.println("Error de IO:" + ioe.toString());
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getStackTrace());
         }
     }//fin guardarDatos
 

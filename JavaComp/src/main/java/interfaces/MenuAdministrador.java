@@ -7,6 +7,7 @@ import classes.Opinion;
 import classes.Producto;
 import classes.UtilProducto;
 import classes.UtilRegistro;
+import classes.Venta;
 import com.formdev.flatlaf.FlatDarkLaf;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -24,6 +25,10 @@ public class MenuAdministrador extends javax.swing.JFrame {
     private ArrayList<Cliente> peraux; //Referencia al ArrayList de clientes de la clase Utilregistro
     private ListIterator<Cliente> licliente; //Iterador para recorrer el ArrayList en ambas direcciones
     private Cliente objper; //Referencia a un objeto de tipo persona del ArrayList
+    
+      private ArrayList<Venta> ventaaux; //Referencia al ArrayList de clientes de la clase Utilregistro
+    private ListIterator<Venta> liventa; //Iterador para recorrer el ArrayList en ambas direcciones
+    private Venta objventa; //Referencia a un objeto de tipo persona del ArrayList
 
     /**
      * Creates new form MenuAdministrador
@@ -34,6 +39,7 @@ public class MenuAdministrador extends javax.swing.JFrame {
 
         //CARGAR LOS DATOS
         UtilProducto.cargarDatos();
+        UtilProducto.cargarDatosVentas();
         UtilRegistro.cargarDatos();
         System.out.println(UtilProducto.getProductos());
         ///CONSULTAR 
@@ -47,18 +53,19 @@ public class MenuAdministrador extends javax.swing.JFrame {
             consultarClientes();
             System.out.println("Consultados");
 
-            //jPanelVentas.setVisible(false);
+            jPanelVentas.setVisible(false);
         } else if (tipoDeBusqueda.equals("Productos")) {
             jPanelProductos.setVisible(true);
             jPanelUsuarios.setVisible(false);
-            //jPanelVentas.setVisible(false);
+            jPanelVentas.setVisible(false);
             jPanelConsultaProductos.setVisible(true);
             jPanelNuevoProducto.setVisible(false);
             consultarTodo();
         } else if (tipoDeBusqueda.equals("Ventas")) {
             jPanelProductos.setVisible(false);
             jPanelUsuarios.setVisible(false);
-            //jPanelVentas.setVisible(true);
+            jPanelVentas.setVisible(true);
+            consultarVentas();
         }
 
         //Para el tema oscuro///
@@ -156,6 +163,65 @@ public class MenuAdministrador extends javax.swing.JFrame {
 
         //productoPanelAdmin1.set
     }
+    private void consultarVentas() {
+        try {
+            ///productoPanelAdmin1.consultarTodo();
+
+            //referenciamos al ArrayList de UtilCenso
+            ventaaux = UtilProducto.getVentas();
+
+            //creamos el iterador sobre el ArrayList
+            liventa = ventaaux.listIterator();
+
+            //si no hay personas...
+            if (ventaaux.size() < 1) {
+                JOptionPane.showMessageDialog(this, "No hay ventas", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+
+                jPanelConsultaProductos1.setVisible(false);
+                ventaPanelAdmin1.setVisible(false);
+                return;
+            } else {
+                jPanelConsultaProductos1.setVisible(true);
+                ventaPanelAdmin1.setVisible(true);
+            }
+
+            //presentamos la primera persona
+            if (liventa.hasNext()) {
+                objventa = (Producto) li.next();
+
+            }
+            if (objproc != null) {
+                presenta(objproc);
+                UtilProducto.productoActual = objproc;
+                productoPanelAdmin1.setOpinionIndex(0);
+                productoPanelAdmin1.mostrarOpiniones(productoPanelAdmin1.getOpinionIndex());
+
+            } else {
+                JOptionPane.showMessageDialog(this, "No hay productos2.", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Mensaje", JOptionPane.ERROR_MESSAGE);
+            System.out.println("Error: " + e.toString());
+        }
+
+    }//fin consultarTodo
+
+    /**
+     * Presenta los datos de una persona en el panel de datos
+     */
+    private void presentaVentas(Venta venta) {
+        productoPanelAdmin1.setjTextFieldNombreProducto(proc.getTitulo());
+        productoPanelAdmin1.setjTextFieldDescripcion(proc.getDescripcion());
+        productoPanelAdmin1.setjComboBoxCategoria(proc.getCategoria());
+        productoPanelAdmin1.setjFormattedTextFieldPrecio(proc.getPrecio());
+        productoPanelAdmin1.setjTextFieldFotoProducto(proc.getFotoProducto());
+        productoPanelAdmin1.setFotoProducto(proc.getFotoProducto());
+        productoPanelAdmin1.setjFormattedTextFieldStock(proc.getStock());
+        productoPanelAdmin1.setjTextFieldFechaDeEntrada(proc.getFechaDeEntrada());
+        productoPanelAdmin1.setPuntuacion(proc.getOpinionMedia());
+
+        //productoPanelAdmin1.set
+    }
 
     private void consultarClientes() {
         try {
@@ -221,16 +287,21 @@ public class MenuAdministrador extends javax.swing.JFrame {
     private void initComponents() {
 
         jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
+        jPanelVentas = new javax.swing.JPanel();
+        jPanelConsultaProductos1 = new javax.swing.JPanel();
+        jButtonSiguienteVenta = new javax.swing.JButton();
+        jButtonAnteriorVenta = new javax.swing.JButton();
+        ventaPanelAdmin1 = new interfaces.VentaPanelAdmin();
         jPanelAdministrador = new javax.swing.JPanel();
         jLabelAdministrador = new javax.swing.JLabel();
-        jPanelConsultar = new javax.swing.JPanel();
-        jComboBoxUsuariosProductosVentas = new javax.swing.JComboBox<>();
-        jButtonConsultar = new javax.swing.JButton();
         jPanelUsuarios = new javax.swing.JPanel();
         jPanelConsultaUsuarios = new javax.swing.JPanel();
         jButtonAnteriorUsuario = new javax.swing.JButton();
         jButtonSiguienteUsuario = new javax.swing.JButton();
         usuarioPanel1 = new interfaces.UsuarioPanel();
+        jPanelConsultar = new javax.swing.JPanel();
+        jComboBoxUsuariosProductosVentas = new javax.swing.JComboBox<>();
+        jButtonConsultar = new javax.swing.JButton();
         jPanelProductos = new javax.swing.JPanel();
         jPanelNuevoProducto = new javax.swing.JPanel();
         jButtonBorrar = new javax.swing.JButton();
@@ -249,6 +320,72 @@ public class MenuAdministrador extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jButtonSiguienteVenta.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jButtonSiguienteVenta.setText("-->");
+        jButtonSiguienteVenta.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        jButtonSiguienteVenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSiguienteVentaActionPerformed(evt);
+            }
+        });
+
+        jButtonAnteriorVenta.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jButtonAnteriorVenta.setText("<--");
+        jButtonAnteriorVenta.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        jButtonAnteriorVenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAnteriorVentaActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanelConsultaProductos1Layout = new javax.swing.GroupLayout(jPanelConsultaProductos1);
+        jPanelConsultaProductos1.setLayout(jPanelConsultaProductos1Layout);
+        jPanelConsultaProductos1Layout.setHorizontalGroup(
+            jPanelConsultaProductos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 653, Short.MAX_VALUE)
+            .addGroup(jPanelConsultaProductos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanelConsultaProductos1Layout.createSequentialGroup()
+                    .addGap(218, 218, 218)
+                    .addComponent(jButtonAnteriorVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(113, 113, 113)
+                    .addComponent(jButtonSiguienteVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(218, Short.MAX_VALUE)))
+        );
+        jPanelConsultaProductos1Layout.setVerticalGroup(
+            jPanelConsultaProductos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 60, Short.MAX_VALUE)
+            .addGroup(jPanelConsultaProductos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanelConsultaProductos1Layout.createSequentialGroup()
+                    .addGap(16, 16, 16)
+                    .addGroup(jPanelConsultaProductos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButtonAnteriorVenta)
+                        .addComponent(jButtonSiguienteVenta))
+                    .addContainerGap(17, Short.MAX_VALUE)))
+        );
+
+        javax.swing.GroupLayout jPanelVentasLayout = new javax.swing.GroupLayout(jPanelVentas);
+        jPanelVentas.setLayout(jPanelVentasLayout);
+        jPanelVentasLayout.setHorizontalGroup(
+            jPanelVentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelVentasLayout.createSequentialGroup()
+                .addGap(64, 64, 64)
+                .addGroup(jPanelVentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(ventaPanelAdmin1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanelConsultaProductos1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(87, Short.MAX_VALUE))
+        );
+        jPanelVentasLayout.setVerticalGroup(
+            jPanelVentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelVentasLayout.createSequentialGroup()
+                .addGap(64, 64, 64)
+                .addComponent(jPanelConsultaProductos1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(ventaPanelAdmin1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(79, Short.MAX_VALUE))
+        );
+
+        getContentPane().add(jPanelVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 80, -1, -1));
 
         jPanelAdministrador.setBackground(new java.awt.Color(51, 51, 51));
 
@@ -274,48 +411,6 @@ public class MenuAdministrador extends javax.swing.JFrame {
         );
 
         getContentPane().add(jPanelAdministrador, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
-
-        jPanelConsultar.setBackground(new java.awt.Color(51, 51, 51));
-
-        jComboBoxUsuariosProductosVentas.setBackground(new java.awt.Color(204, 204, 204));
-        jComboBoxUsuariosProductosVentas.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jComboBoxUsuariosProductosVentas.setForeground(new java.awt.Color(51, 51, 51));
-        jComboBoxUsuariosProductosVentas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Usuarios", "Productos", "Ventas" }));
-        jComboBoxUsuariosProductosVentas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBoxUsuariosProductosVentasActionPerformed(evt);
-            }
-        });
-
-        jButtonConsultar.setText("Consultar");
-        jButtonConsultar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonConsultarActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanelConsultarLayout = new javax.swing.GroupLayout(jPanelConsultar);
-        jPanelConsultar.setLayout(jPanelConsultarLayout);
-        jPanelConsultarLayout.setHorizontalGroup(
-            jPanelConsultarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelConsultarLayout.createSequentialGroup()
-                .addGap(193, 193, 193)
-                .addComponent(jComboBoxUsuariosProductosVentas, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 157, Short.MAX_VALUE)
-                .addComponent(jButtonConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(99, 99, 99))
-        );
-        jPanelConsultarLayout.setVerticalGroup(
-            jPanelConsultarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelConsultarLayout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addGroup(jPanelConsultarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButtonConsultar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jComboBoxUsuariosProductosVentas))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        getContentPane().add(jPanelConsultar, new org.netbeans.lib.awtextra.AbsoluteConstraints(248, 0, -1, 54));
 
         jButtonAnteriorUsuario.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jButtonAnteriorUsuario.setText("<--");
@@ -367,7 +462,7 @@ public class MenuAdministrador extends javax.swing.JFrame {
             .addGroup(jPanelUsuariosLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(usuarioPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 757, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addContainerGap(53, Short.MAX_VALUE))
         );
         jPanelUsuariosLayout.setVerticalGroup(
             jPanelUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -376,10 +471,52 @@ public class MenuAdministrador extends javax.swing.JFrame {
                 .addComponent(jPanelConsultaUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(usuarioPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(110, Short.MAX_VALUE))
+                .addContainerGap(251, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanelUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 80, -1, -1));
+
+        jPanelConsultar.setBackground(new java.awt.Color(51, 51, 51));
+
+        jComboBoxUsuariosProductosVentas.setBackground(new java.awt.Color(204, 204, 204));
+        jComboBoxUsuariosProductosVentas.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jComboBoxUsuariosProductosVentas.setForeground(new java.awt.Color(51, 51, 51));
+        jComboBoxUsuariosProductosVentas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Usuarios", "Productos", "Ventas" }));
+        jComboBoxUsuariosProductosVentas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxUsuariosProductosVentasActionPerformed(evt);
+            }
+        });
+
+        jButtonConsultar.setText("Consultar");
+        jButtonConsultar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonConsultarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanelConsultarLayout = new javax.swing.GroupLayout(jPanelConsultar);
+        jPanelConsultar.setLayout(jPanelConsultarLayout);
+        jPanelConsultarLayout.setHorizontalGroup(
+            jPanelConsultarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelConsultarLayout.createSequentialGroup()
+                .addGap(193, 193, 193)
+                .addComponent(jComboBoxUsuariosProductosVentas, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 157, Short.MAX_VALUE)
+                .addComponent(jButtonConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(99, 99, 99))
+        );
+        jPanelConsultarLayout.setVerticalGroup(
+            jPanelConsultarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelConsultarLayout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addGroup(jPanelConsultarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButtonConsultar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jComboBoxUsuariosProductosVentas))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        getContentPane().add(jPanelConsultar, new org.netbeans.lib.awtextra.AbsoluteConstraints(248, 0, -1, 54));
 
         jButtonBorrar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jButtonBorrar.setText("Borrar");
@@ -755,6 +892,14 @@ public class MenuAdministrador extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonAnteriorUsuarioActionPerformed
 
+    private void jButtonAnteriorVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnteriorVentaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonAnteriorVentaActionPerformed
+
+    private void jButtonSiguienteVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSiguienteVentaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonSiguienteVentaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -802,6 +947,7 @@ public class MenuAdministrador extends javax.swing.JFrame {
     private javax.swing.JButton jButtonAnadirProductos;
     private javax.swing.JButton jButtonAnteriorProducto;
     private javax.swing.JButton jButtonAnteriorUsuario;
+    private javax.swing.JButton jButtonAnteriorVenta;
     private javax.swing.JButton jButtonBorrar;
     private javax.swing.JButton jButtonConsultar;
     private javax.swing.JButton jButtonConsultarExistentes;
@@ -810,17 +956,21 @@ public class MenuAdministrador extends javax.swing.JFrame {
     private javax.swing.JButton jButtonNuevoProducto;
     private javax.swing.JButton jButtonSiguienteProducto;
     private javax.swing.JButton jButtonSiguienteUsuario;
+    private javax.swing.JButton jButtonSiguienteVenta;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JComboBox<String> jComboBoxUsuariosProductosVentas;
     private javax.swing.JLabel jLabelAdministrador;
     private javax.swing.JPanel jPanelAdministrador;
     private javax.swing.JPanel jPanelConsultaProductos;
+    private javax.swing.JPanel jPanelConsultaProductos1;
     private javax.swing.JPanel jPanelConsultaUsuarios;
     private javax.swing.JPanel jPanelConsultar;
     private javax.swing.JPanel jPanelNuevoProducto;
     private javax.swing.JPanel jPanelProductos;
     private javax.swing.JPanel jPanelUsuarios;
+    private javax.swing.JPanel jPanelVentas;
     private interfaces.ProductoPanelAdmin productoPanelAdmin1;
     private interfaces.UsuarioPanel usuarioPanel1;
+    private interfaces.VentaPanelAdmin ventaPanelAdmin1;
     // End of variables declaration//GEN-END:variables
 }

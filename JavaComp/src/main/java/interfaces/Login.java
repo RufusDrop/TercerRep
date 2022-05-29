@@ -72,6 +72,7 @@ public class Login extends javax.swing.JFrame {
         //CARGAMOS LOS DATOS
         UtilRegistro.cargarDatos();
         UtilProducto.cargarDatos();
+        UtilProducto.cargarDatosVentas();
 
         try {
             javax.swing.UIManager.setLookAndFeel(new FlatDarkLaf());
