@@ -24,7 +24,7 @@ public class Manager {
             if (categorias.size() >= 1) {
                 for (int i = 0; i < categorias.size(); i++) {
                     for (Producto producto : productos) {
-                        if (producto.getCategoria().equals(categorias.get(i).toString())) {
+                        if (producto.getCategoria().toUpperCase().equals(categorias.get(i).toString().toUpperCase())) {
                             productosAMostrar.add(producto);
                         }
                     }
@@ -40,7 +40,7 @@ public class Manager {
                 for (int i = 0; i < palabras.length; i++) {
                     for (int j = 0; j < categorias.size(); j++) {
                         for (Producto producto : productos) {
-                            if ((producto.getCategoria().equals(categorias.get(j).toString())) && producto.getTitulo().contains(palabras[i])) {
+                            if ((producto.getCategoria().equals(categorias.get(j).toString())) && producto.getTitulo().toUpperCase().contains(palabras[i].toUpperCase())) {
                                 productosAMostrar.add(producto);
                             }
                         }
