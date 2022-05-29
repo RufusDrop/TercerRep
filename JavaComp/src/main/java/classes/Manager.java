@@ -60,6 +60,7 @@ public class Manager {
 
     }
     /**
+     * Ordenación de los productos por relevancia
      * @param productosAOrdenar
      * @return 
      */
@@ -80,7 +81,11 @@ public class Manager {
         Collections.reverse(productosAOrdenar);
         return productosAOrdenar;
     }
-
+    /**
+     * Ordenación de los productos de mayor a menor precio
+     * @param productosAOrdenar
+     * @return 
+     */
     public static ArrayList<Producto> ordenarProductosPorPrecioMayor(ArrayList<Producto> productosAOrdenar) {
         //Comparador para ordenar los clientes por su nombre
         Comparator NomCliComp = new Comparator() {
@@ -97,7 +102,11 @@ public class Manager {
         Collections.reverse(productosAOrdenar);
         return productosAOrdenar;
     }
-
+    /**
+     * Ordenación de los productos de menor a mayor precio
+     * @param productosAOrdenar
+     * @return 
+     */
     public static ArrayList<Producto> ordenarProductosPorPrecioMenor(ArrayList<Producto> productosAOrdenar) {
         //Comparador para ordenar los clientes por su nombre
         Comparator NomCliComp = new Comparator() {
