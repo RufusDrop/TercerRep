@@ -62,7 +62,7 @@ public class Carrito extends javax.swing.JDialog {
             int unidades = Integer.parseInt(separacion[1]);
             String nombre = separacion[0];
             precio += clienteActual.getCarrito().get(i).getPrecio() * unidades;
-            productoAMostrar.add(clienteActual.getCarrito().get(i).getTitulo() + " (" + clienteActual.getCarrito().get(i).getPrecio() * unidades + "€)");
+            productoAMostrar.add(nombre+" x"+unidades + " (" + clienteActual.getCarrito().get(i).getPrecio() * unidades + "€)");
         }
         
         
