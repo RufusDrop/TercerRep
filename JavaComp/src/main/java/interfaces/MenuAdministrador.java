@@ -187,17 +187,15 @@ public class MenuAdministrador extends javax.swing.JFrame {
 
             //presentamos la primera persona
             if (liventa.hasNext()) {
-                objventa = (Producto) li.next();
+                objventa = (Venta) liventa.next();
 
             }
-            if (objproc != null) {
-                presenta(objproc);
-                UtilProducto.productoActual = objproc;
-                productoPanelAdmin1.setOpinionIndex(0);
-                productoPanelAdmin1.mostrarOpiniones(productoPanelAdmin1.getOpinionIndex());
+            if (objventa != null) {
+                presentaVentas(objventa);
+                UtilProducto.ventaActual = objventa;
 
             } else {
-                JOptionPane.showMessageDialog(this, "No hay productos2.", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "No hay ventas", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Mensaje", JOptionPane.ERROR_MESSAGE);
@@ -210,17 +208,15 @@ public class MenuAdministrador extends javax.swing.JFrame {
      * Presenta los datos de una persona en el panel de datos
      */
     private void presentaVentas(Venta venta) {
-        productoPanelAdmin1.setjTextFieldNombreProducto(proc.getTitulo());
-        productoPanelAdmin1.setjTextFieldDescripcion(proc.getDescripcion());
-        productoPanelAdmin1.setjComboBoxCategoria(proc.getCategoria());
-        productoPanelAdmin1.setjFormattedTextFieldPrecio(proc.getPrecio());
-        productoPanelAdmin1.setjTextFieldFotoProducto(proc.getFotoProducto());
-        productoPanelAdmin1.setFotoProducto(proc.getFotoProducto());
-        productoPanelAdmin1.setjFormattedTextFieldStock(proc.getStock());
-        productoPanelAdmin1.setjTextFieldFechaDeEntrada(proc.getFechaDeEntrada());
-        productoPanelAdmin1.setPuntuacion(proc.getOpinionMedia());
-
-        //productoPanelAdmin1.set
+        ventaPanelAdmin1.setjLabelNombre(venta.getComprador().getNombre());
+        ventaPanelAdmin1.setjLabelCorreo(venta.getComprador().getCorreo());
+        ventaPanelAdmin1.setjLabelPrecio(venta.getPrecio());
+        ventaPanelAdmin1.setjLabelFecha(venta.getFechaCompra().toString());
+        String[] productos = new String[venta.getCompra().size()];
+        for (int i = 0; i < venta.getCompra().size(); i++) {
+            productos[i] = venta.getCompra().get(i);
+        }
+        ventaPanelAdmin1.setjListProductos(productos);
     }
 
     private void consultarClientes() {
@@ -692,18 +688,19 @@ public class MenuAdministrador extends javax.swing.JFrame {
             jPanelProductos.setVisible(false);
             jPanelUsuarios.setVisible(true);
             consultarClientes();
-            //jPanelVentas.setVisible(false);
+            jPanelVentas.setVisible(false);
         } else if (tipoDeBusqueda.equals("Productos")) {
             jPanelProductos.setVisible(true);
             jPanelUsuarios.setVisible(false);
-            //jPanelVentas.setVisible(false);
+            jPanelVentas.setVisible(false);
             jPanelConsultaProductos.setVisible(true);
             jPanelNuevoProducto.setVisible(false);
             consultarTodo();
         } else if (tipoDeBusqueda.equals("Ventas")) {
             jPanelProductos.setVisible(false);
             jPanelUsuarios.setVisible(false);
-            //jPanelVentas.setVisible(true);
+            jPanelVentas.setVisible(true);
+            consultarVentas();
         }
     }//GEN-LAST:event_jButtonConsultarActionPerformed
 
@@ -894,10 +891,26 @@ public class MenuAdministrador extends javax.swing.JFrame {
 
     private void jButtonAnteriorVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnteriorVentaActionPerformed
         // TODO add your handling code here:
+        if (liventa.hasNext()) {
+            objventa = liventa.next();
+            if (objventa != null) {
+                presentaVentas(objventa);
+            } else {
+                JOptionPane.showMessageDialog(this, "No hay más ventas", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
     }//GEN-LAST:event_jButtonAnteriorVentaActionPerformed
 
     private void jButtonSiguienteVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSiguienteVentaActionPerformed
         // TODO add your handling code here:
+        if (liventa.hasPrevious()) {
+            objventa = liventa.previous();
+            if (objventa != null) {
+                presentaVentas(objventa);
+            } else {
+                JOptionPane.showMessageDialog(this, "No hay más ventas", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
     }//GEN-LAST:event_jButtonSiguienteVentaActionPerformed
 
     /**
