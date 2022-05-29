@@ -1,3 +1,4 @@
+
 package interfaces;
 
 import classes.Tarjeta;
@@ -5,6 +6,7 @@ import classes.UtilRegistro;
 import javax.swing.JOptionPane;
 import static interfaces.Login.objcli;
 import java.util.Date;
+
 
 public class InterfazTarjeta extends javax.swing.JDialog {
 
@@ -16,38 +18,32 @@ public class InterfazTarjeta extends javax.swing.JDialog {
         initComponents();
         this.setLocationRelativeTo(null); //Esta linea se pone para que la ventana salga centrada.
         Tarjeta tarj = objcli.getTarjeta();
-        if (tarj != null) {
+        if(tarj!=null){
             setjTextFieldTitularCuenta(tarj.getNombreTitular());
             setjFormattedTextFieldNumero(tarj.getNumero());
-            setjFormattedTextFieldFechacaducidad(tarj.getFecha().toString());
+            setjFormattedTextFieldFechacaducidad(tarj.getFecha().toString());            
         }
     }
 
     private InterfazTarjeta(boolean b) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
-    public String getjTextFieldTitularCuenta() {
+    public String getjTextFieldTitularCuenta(){
         return jTextFieldTitularDeLaCuenta.getText();
     }
-
-    public int getjFormattedTextFieldNumero() {
+    public int getjFormattedTextFieldNumero(){
         return Integer.valueOf(jFormattedTextFieldNumeroDeTarjeta.getText());
     }
-
-    public Date getjFormattedTextFieldFechaCaducidad() {
+    public Date getjFormattedTextFieldFechaCaducidad(){
         return (Date) jFormattedTextFieldFechaDeCaducidad.getValue();
     }
-
-    public void setjTextFieldTitularCuenta(String txt) {
+    public void setjTextFieldTitularCuenta(String txt){
         jTextFieldTitularDeLaCuenta.setText(txt);
     }
-
-    public void setjFormattedTextFieldNumero(int num) {
+    public void setjFormattedTextFieldNumero(int num){
         jFormattedTextFieldNumeroDeTarjeta.setValue(num);
     }
-
-    public void setjFormattedTextFieldFechacaducidad(String txt) {
+    public void setjFormattedTextFieldFechacaducidad(String txt){
         jFormattedTextFieldFechaDeCaducidad.setText(txt);
     }
 
@@ -171,31 +167,42 @@ public class InterfazTarjeta extends javax.swing.JDialog {
     }//GEN-LAST:event_jTextFieldTitularDeLaCuentaActionPerformed
 
     private void jButtonVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVolverActionPerformed
-        super.setVisible(true);
-        this.setVisible(false);
+            super.setVisible(true);
+            this.setVisible(false);
     }//GEN-LAST:event_jButtonVolverActionPerformed
 
     private void jButtonValidarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValidarActionPerformed
-        // TODO add your handling code here:
-        if (jTextFieldTitularDeLaCuenta.getText().isBlank()
-                || jFormattedTextFieldNumeroDeTarjeta.getText().isBlank()
-                || jFormattedTextFieldFechaDeCaducidad.getText().isBlank()) {
+        // Verificamos que los parametros introducidos son correctos
+        //Verificamos que se hayan rellenado todos los parametros
+        if(jTextFieldTitularDeLaCuenta.getText().isBlank()||
+            jFormattedTextFieldNumeroDeTarjeta.getText().isBlank()||
+            jFormattedTextFieldFechaDeCaducidad.getText().isBlank()){
             JOptionPane.showMessageDialog(this, "Rellena todos los campos", "Error", JOptionPane.WARNING_MESSAGE);
-        } else if (jFormattedTextFieldNumeroDeTarjeta.getText().contains(" ")) {
+        }
+        else
+        if(jFormattedTextFieldNumeroDeTarjeta.getText().contains(" ")){//Comprobamos que el Numero de la tarjeta no contenga espacios.
             JOptionPane.showMessageDialog(this, "Introduce el número de la tarjeta sin espacios", "Error", JOptionPane.WARNING_MESSAGE);
         }
+        if(jFormattedTextFieldNumeroDeTarjeta.getText().length()!=16){//Comprobamos que el Numero de la tarjeta contiene 16 numeros
+            JOptionPane.showMessageDialog(this, "El numero de tarjeta debe contener 16 caracteres", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+        else
+        if(jFormattedTextFieldFechaDeCaducidad.getText().contains(" ")){//Comprobamos que la fecha de caducidad no contiene espacios
+            JOptionPane.showMessageDialog(this, "Introduce el número de la tarjeta sin espacios", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+        else{
         Tarjeta tarj = objcli.getTarjeta();
-        if (tarj == null) {
-            classes.Tarjeta tar = new classes.Tarjeta(getjTextFieldTitularCuenta(), getjFormattedTextFieldNumero(), getjFormattedTextFieldFechaCaducidad());
-            tarj = tar;
+        if(tarj==null){
+            classes.Tarjeta tar=new classes.Tarjeta(getjTextFieldTitularCuenta(),getjFormattedTextFieldNumero(),getjFormattedTextFieldFechaCaducidad());
+            tarj=tar;
             JOptionPane.showMessageDialog(this, "Su tarjeta ha sido guardada con éxito.", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            tarj.modificaTarjeta(tarj, getjTextFieldTitularCuenta(), getjFormattedTextFieldNumero(), getjFormattedTextFieldFechaCaducidad());
-            JOptionPane.showMessageDialog(this, "Su tarjeta ha sido guardada con éxito.", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+        }else{
+        tarj.modificaTarjeta(tarj,getjTextFieldTitularCuenta(),getjFormattedTextFieldNumero(),getjFormattedTextFieldFechaCaducidad());
+        JOptionPane.showMessageDialog(this, "Su tarjeta ha sido guardada con éxito.", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
         }
         objcli.setTarjeta(tarj);
         UtilRegistro.guardarDatos();
-
+        }  
     }//GEN-LAST:event_jButtonValidarActionPerformed
 
     /**

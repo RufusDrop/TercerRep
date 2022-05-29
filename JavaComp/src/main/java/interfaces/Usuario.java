@@ -6,10 +6,11 @@ package interfaces;
 
 import classes.ClienteEmpresa;
 import classes.Direccion;
+import classes.Producto;
 import classes.UtilRegistro;
 import static interfaces.Login.objcli;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
-
 /**
  *
  * @author nicol
@@ -21,14 +22,14 @@ public class Usuario extends javax.swing.JDialog {
      */
     public Usuario(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        initComponents();
-        if (objcli.getClass().equals(ClienteEmpresa.class)) {
+        initComponents();       
+        if(objcli.getClass().equals(ClienteEmpresa.class)){
             usuarioPanel.importadorInformacion(objcli);
-        } else {
+        }else{
             usuarioPanel.importadorInformacion(objcli);
         }
     }
-
+ 
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -89,31 +90,118 @@ public class Usuario extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonGuardarCambiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarCambiosActionPerformed
-        //Recogemos la información recogida en el UsuarioPanel
-        String nombre = usuarioPanel.getjTextFieldNombre();
-        String correo = usuarioPanel.getjTextFieldCorreoElectronico();
-        String clave = usuarioPanel.getjTextFieldClave();
-        String calle = usuarioPanel.getjTextFieldCalle();
-        int numero = usuarioPanel.getjFormattedTextFieldNumero();
-        String extra = usuarioPanel.getjTextFieldExtra();
-        String ciudad = usuarioPanel.getjTextFieldCiudad();
-        int codigoPostal = usuarioPanel.getjFormattedTextFieldCodigoPostal();
-        int telefono = usuarioPanel.getjFormattedTextFieldTelefono();
-        String cif = usuarioPanel.getjTextFieldCIF();
-        String web = usuarioPanel.getjTextFieldWeb();
-        String dni = usuarioPanel.getjTextFieldDNI();
-        Direccion direccion = new Direccion(calle, numero, extra, codigoPostal, ciudad);
-        //Llama al metodo modificaCliente para modificar la informacion de este
-        if (UtilRegistro.modificaCliente(objcli, nombre, correo, clave, direccion, telefono, dni, cif, web, objcli.getCarrito())) {
-            JOptionPane.showMessageDialog(this, "Cambios guardados con éxito.", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            JOptionPane.showMessageDialog(this, "Error.", "Error", JOptionPane.ERROR_MESSAGE);
+ //Recogemos la información recogida en el UsuarioPanel
+    String nombre=usuarioPanel.getjTextFieldNombre();
+    String correo=usuarioPanel.getjTextFieldCorreoElectronico();
+    String clave=usuarioPanel.getjTextFieldClave();
+    String calle=usuarioPanel.getjTextFieldCalle();
+    int numero=usuarioPanel.getjFormattedTextFieldNumero();
+    String extra=usuarioPanel.getjTextFieldExtra();
+    String ciudad=usuarioPanel.getjTextFieldCiudad();
+    int codigoPostal=usuarioPanel.getjFormattedTextFieldCodigoPostal();
+    int telefono=usuarioPanel.getjFormattedTextFieldTelefono();
+    String cif=usuarioPanel.getjTextFieldCIF();
+    String web=usuarioPanel.getjTextFieldWeb();
+    String dni=usuarioPanel.getjTextFieldDNI();
+    ArrayList<Producto> carrito=new ArrayList<Producto>();
+    Direccion direccion =new Direccion(calle,numero,extra,codigoPostal,ciudad);
+    
+    //Se procede a hacer las mismas verificaciones que en el registro.
+    Object tipoDeUsuario;
+        tipoDeUsuario = usuarioPanel.getjComboBoxTipoUsuario();
+    if( 
+                
+                (tipoDeUsuario=="Empresa" && (cif.isBlank()||web.isBlank()))  
+                || (tipoDeUsuario=="Particular" && (dni.isBlank()))){
+            JOptionPane.showMessageDialog(this, "Rellena todos los campos", "Error", JOptionPane.WARNING_MESSAGE);
         }
-        UtilRegistro.guardarDatos();
+        else
+            //Se verifica que todos los valores esten rellenos
+        if(    
+                 nombre.isBlank()||
+                 correo.isBlank() ||
+                 clave.isBlank()|| 
+                 calle.isBlank()||
+                 String.valueOf(telefono).isBlank()||
+                 String.valueOf(codigoPostal).isBlank()||
+                 ciudad.isBlank()||
+                 String.valueOf(numero).isBlank()){
+        
+                 JOptionPane.showMessageDialog(this, "Rellene todos los campos.", "Error", JOptionPane.WARNING_MESSAGE);
+          }
+        //Se verifica que no haya errores a la hora de introducir los datos en el registro
+        else
+        if(tipoDeUsuario=="Particular" && dni.contains(" ")){  //Se comprueba que el DNI no contiene espacios
+                JOptionPane.showMessageDialog(this, "El DNI no puede tener espacios.", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+        else
+        if(tipoDeUsuario=="Particular" && dni.length()<9){  //Se comprueba que el DNI contenga 9 caracteres
+                JOptionPane.showMessageDialog(this, "El DNI debe contener 8 numeros y una letra.", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+        else
+        if(tipoDeUsuario=="Empresa" &&cif.contains(" ")){  //Se comprueba que el CIF no contenga espacios
+                JOptionPane.showMessageDialog(this, "El CIF no puede tener espacios.", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+        else
+        if(tipoDeUsuario=="Empresa" &&cif.length()<9){  ////Se comprueba que el CIF contenga 9 cifras.
+                JOptionPane.showMessageDialog(this, "El CIF debe contener una letra y 8 cifras.", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+        else
+        if(tipoDeUsuario=="Empresa" &&web.contains(" ")){  //Luego se comprueba que la web no contenga espacios.
+                JOptionPane.showMessageDialog(this, "La web no puede tener espacios.", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+        else
+        if(correo.contains(" ")){  ////Se comprueba que el correo electrónico no contenga espacios.
+                JOptionPane.showMessageDialog(this, "El correo no puede tener espacios", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+        else
+        if(!correo.contains("@")||!correo.contains(".")){  ////Se comprueba que el correo electrónico sea adecuado es decir que contenga una @ y un . como mínimo.
+                JOptionPane.showMessageDialog(this, "Introduzca un correo electrónico correcto.", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+        else
+        if(clave.contains(" ")){  ////Se comprueba que la contraseña no tenga espacios.
+                JOptionPane.showMessageDialog(this, "La contraseña no puede tener espacios", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+        else
+        if(clave.length()<8){  ////Se comprueba que la contraseña no tenga espacios.
+                JOptionPane.showMessageDialog(this, "La contraseña no es segura, introduzca 8 caracteres como mínimo. Recomendable que use letras, numero y caracteres", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+        else
+        if(String.valueOf(telefono).contains(" ")){  //Se comprueba que el telefono no contenga espacios
+                JOptionPane.showMessageDialog(this, "El teléfono no puede tener espacios.", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+        else
+        if(telefono<0 || String.valueOf(telefono).length()!=9){//Se comprueba que el telefono contiene como minimo 9 digitos.
+            JOptionPane.showMessageDialog(this, "El teléfono debe ser valido. Nueve numeros enteros seguidos.", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+        else
+        if(String.valueOf(codigoPostal).contains(" ")){//Se comprueba que el codigo postal no contenga espacios  
+                JOptionPane.showMessageDialog(this, "El código postal no puede tener espacios.", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+        else
+        if(String.valueOf(codigoPostal).length()!=5||codigoPostal<=0){//Se comprueba que el codigo postal sea correcto, positivo y que tenga 4 cifras.  
+                JOptionPane.showMessageDialog(this, "Introduzca un codigo postal correcto.", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+        else
+        if(String.valueOf(numero).contains(" ")){//Se comprueba que el numero de la calle no contenga espacios  
+                JOptionPane.showMessageDialog(this, "El número de domicilio no puede tener espacios.", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+        else
+        if(numero<=0){//Se comprueba que el numero de la calle no sea negativo  
+                JOptionPane.showMessageDialog(this, "El numero no puede ser negativo", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+        else{
+    //Llama al metodo modificaCliente para modificar la informacion de este
+    if(UtilRegistro.modificaCliente(objcli, nombre, correo, clave, direccion, telefono, dni, cif, web, carrito)){
+        JOptionPane.showMessageDialog(this, "Cambios guardados con éxito.", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+    }else{
+        JOptionPane.showMessageDialog(this, "Error.", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+    UtilRegistro.guardarDatos();
     }//GEN-LAST:event_jButtonGuardarCambiosActionPerformed
-
+    }
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        new InterfazTarjeta(this, true).setVisible(true);
+        new InterfazTarjeta(this,true).setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

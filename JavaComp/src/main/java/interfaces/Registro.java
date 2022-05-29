@@ -1,3 +1,4 @@
+
 package interfaces;
 
 import classes.Cliente;
@@ -10,12 +11,13 @@ import com.formdev.flatlaf.FlatDarkLaf;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
-public class Registro extends javax.swing.JDialog {
 
+public class Registro extends javax.swing.JDialog {
+    
     //Inializamos el cliente
     private Cliente cli = null;
     private Direccion dir = null;
-
+    
     /**
      * Creates new form Registro
      */
@@ -23,20 +25,23 @@ public class Registro extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null); //Esta linea se pone para que la ventana salga centrada.
-
+        
+        
+        
         /**
          * Asegura que todas las cajas empiecen con la visibilidad esperada
          */
         Object tipoDeUsuario;
         tipoDeUsuario = jComboBoxEmpresaParticular.getSelectedItem();
-        if (tipoDeUsuario == "Empresa") {
+        if(tipoDeUsuario=="Empresa"){
             jLabelDNI.setVisible(false);
             jTextFieldDNI.setVisible(false);
             jLabelCIF.setVisible(true);
             jTextFieldCIF.setVisible(true);
             jLabelWeb.setVisible(true);
             jTextFieldWeb.setVisible(true);
-        } else if (tipoDeUsuario == "Particular") {
+        }
+        else if(tipoDeUsuario == "Particular"){
             jLabelDNI.setVisible(true);
             jTextFieldDNI.setVisible(true);
             jLabelCIF.setVisible(false);
@@ -44,21 +49,21 @@ public class Registro extends javax.swing.JDialog {
             jLabelWeb.setVisible(false);
             jTextFieldWeb.setVisible(false);
         }
-        try {
-            javax.swing.UIManager.setLookAndFeel(new FlatDarkLaf());
-        } catch (Exception e) {
-            System.err.println("Failed to initialize LaF");
+         try {
+        javax.swing.UIManager.setLookAndFeel(new FlatDarkLaf());
+        } catch (Exception e) { 
+        System.err.println("Failed to initialize LaF");
         }
 
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                System.out.println(info.getName());
-                if ("Flatlaf".equals(info.getName())) {
-                    System.out.println("Flatlaf look and feel stablished");
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
+        for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+            System.out.println(info.getName());
+            if ("Flatlaf".equals(info.getName())) {
+            System.out.println("Flatlaf look and feel stablished");
+            javax.swing.UIManager.setLookAndFeel(info.getClassName());
+            break;
             }
+        }
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
@@ -69,7 +74,7 @@ public class Registro extends javax.swing.JDialog {
             java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-    }
+    } 
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -329,15 +334,15 @@ public class Registro extends javax.swing.JDialog {
     private void jToggleButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonGuardarActionPerformed
         // TODO add your handling code here:
         /**
-         *
+         * 
          * Se comprueba que el numero de telefono sean numeros
          */
         boolean numInvalido = false;
-        try {
+        try{
             for (int i = 0; i < jFormattedTextFieldTelefono.getText().length(); i++) {
                 int telefonoInt = Integer.parseInt(jFormattedTextFieldTelefono.getText());
-            }
-        } catch (NumberFormatException e) {
+        }
+        } catch(NumberFormatException e){
             numInvalido = true;
         }
         Object tipoDeUsuario;
@@ -345,79 +350,126 @@ public class Registro extends javax.swing.JDialog {
         /**
          * Se comprueba que todos los datos se introduzcan y sean validos
          */
-        if ((tipoDeUsuario == "Empresa" && (jTextFieldCIF.getText().isBlank() || jTextFieldWeb.getText().isBlank()))
-                || (tipoDeUsuario == "Particular" && (jTextFieldDNI.getText().isBlank()))) {
+        if( 
+                
+                (tipoDeUsuario=="Empresa" && (jTextFieldCIF.getText().isBlank()||jTextFieldWeb.getText().isBlank()))  
+                || (tipoDeUsuario=="Particular" && (jTextFieldDNI.getText().isBlank()))){
             JOptionPane.showMessageDialog(this, "Rellena todos los campos", "Error", JOptionPane.WARNING_MESSAGE);
-        } else if (jTextFieldNombre.getText().isBlank()
-                || jTextFieldCorreoElectronico.getText().isBlank()
-                || jTextFieldContrasena.getText().isBlank()
-                || jTextFieldCalle.getText().isBlank()
-                || jTextFieldExtra.getText().isBlank()
-                || jFormattedTextFieldNumero.getText().isBlank()
-                || jFormattedTextFieldTelefono.getText().isBlank()
-                || jFormattedTextFieldCodigoPostal.getText().isBlank()
-                || jTextFieldCiudad.getText().isBlank()
-                || jFormattedTextFieldNumero.getText().isBlank()) {
-
-            JOptionPane.showMessageDialog(this, "Rellena todos los campos", "Error", JOptionPane.WARNING_MESSAGE);
-        } else if (tipoDeUsuario == "Particular" && jTextFieldDNI.getText().contains(" ")) {  //Luego se comprueba que el dni sea correcto
-            JOptionPane.showMessageDialog(this, "El DNI no puede tener espacios", "Error", JOptionPane.WARNING_MESSAGE);
-        } else if (tipoDeUsuario == "Empresa" && jTextFieldCIF.getText().contains(" ")) {  //Luego se comprueba que el correo sea correcto
-            JOptionPane.showMessageDialog(this, "El CIF no puede tener espacios", "Error", JOptionPane.WARNING_MESSAGE);
-        } else if (tipoDeUsuario == "Empresa" && jTextFieldWeb.getText().contains(" ")) {  //Luego se comprueba que el correo sea correcto
-            JOptionPane.showMessageDialog(this, "La web no puede tener espacios", "Error", JOptionPane.WARNING_MESSAGE);
-        } else if (jTextFieldCorreoElectronico.getText().contains(" ")) {  //Luego se comprueba que el correo sea correcto
-            JOptionPane.showMessageDialog(this, "El correo no puede tener espacios", "Error", JOptionPane.WARNING_MESSAGE);
-        } else if (jTextFieldContrasena.getText().contains(" ")) {  //Luego se comprueba que el correo sea correcto
-            JOptionPane.showMessageDialog(this, "La contraseña no puede tener espacios", "Error", JOptionPane.WARNING_MESSAGE);
-        } else if (jFormattedTextFieldTelefono.getText().contains(" ")) {  //Luego se comprueba que el correo sea correcto
-            JOptionPane.showMessageDialog(this, "El teléfono no puede tener espacios", "Error", JOptionPane.WARNING_MESSAGE);
-        } else if (numInvalido || jFormattedTextFieldTelefono.getText().length() != 9) {
-            JOptionPane.showMessageDialog(this, "El teléfono debe ser valido. Nueve numeros enteros seguidos", "Error", JOptionPane.WARNING_MESSAGE);
-        } else if (jFormattedTextFieldCodigoPostal.getText().contains(" ")) {
-            JOptionPane.showMessageDialog(this, "El código postal no puede tener espacios", "Error", JOptionPane.WARNING_MESSAGE);
-        } else if ((int) jFormattedTextFieldCodigoPostal.getText().length() != 5) {
-            JOptionPane.showMessageDialog(this, "Introduzca un codigo postal correcto", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+        else
+            //Se verifica que todos los valores esten rellenos
+        if(    
+                 jTextFieldNombre.getText().isBlank()||
+                 jTextFieldCorreoElectronico.getText().isBlank() ||
+                 jTextFieldContrasena.getText().isBlank()|| 
+                 jTextFieldCalle.getText().isBlank()||
+                 jFormattedTextFieldTelefono.getText().isBlank()||
+                 jFormattedTextFieldCodigoPostal.getText().isBlank()||
+                 jTextFieldCiudad.getText().isBlank()||
+                 jFormattedTextFieldNumero.getText().isBlank()){
+        
+                 JOptionPane.showMessageDialog(this, "Rellene todos los campos.", "Error", JOptionPane.WARNING_MESSAGE);
+          }
+        //Se verifica que no haya errores a la hora de introducir los datos en el registro
+        else
+        if(tipoDeUsuario=="Particular" && jTextFieldDNI.getText().contains(" ")){  //Se comprueba que el DNI no contiene espacios
+                JOptionPane.showMessageDialog(this, "El DNI no puede tener espacios.", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+        else
+        if(tipoDeUsuario=="Particular" && jTextFieldDNI.getText().length()<9){  //Se comprueba que el DNI contenga 9 caracteres
+                JOptionPane.showMessageDialog(this, "El DNI debe contener 8 numeros y una letra.", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+        else
+        if(tipoDeUsuario=="Empresa" &&jTextFieldCIF.getText().contains(" ")){  //Se comprueba que el CIF no contenga espacios
+                JOptionPane.showMessageDialog(this, "El CIF no puede tener espacios.", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+        else
+        if(tipoDeUsuario=="Empresa" &&jTextFieldCIF.getText().length()<9){  ////Se comprueba que el CIF contenga 9 cifras.
+                JOptionPane.showMessageDialog(this, "El CIF debe contener una letra y 8 cifras.", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+        else
+        if(tipoDeUsuario=="Empresa" &&jTextFieldWeb.getText().contains(" ")){  //Luego se comprueba que la web no contenga espacios.
+                JOptionPane.showMessageDialog(this, "La web no puede tener espacios.", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+        else
+        if(jTextFieldCorreoElectronico.getText().contains(" ")){  ////Se comprueba que el correo electrónico no contenga espacios.
+                JOptionPane.showMessageDialog(this, "El correo no puede tener espacios", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+        else
+        if(!jTextFieldCorreoElectronico.getText().contains("@")||!jTextFieldCorreoElectronico.getText().contains(".")){  ////Se comprueba que el correo electrónico sea adecuado es decir que contenga una @ y un . como mínimo.
+                JOptionPane.showMessageDialog(this, "Introduzca un correo electrónico correcto.", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+        else
+        if(jTextFieldContrasena.getText().contains(" ")){  ////Se comprueba que la contraseña no tenga espacios.
+                JOptionPane.showMessageDialog(this, "La contraseña no puede tener espacios", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+        else
+            if(jTextFieldContrasena.getText().length()<8){  ////Se comprueba que la contraseña no tenga espacios.
+                JOptionPane.showMessageDialog(this, "La contraseña no es segura, introduzca 8 caracteres como mínimo. Recomendable que use letras, numero y caracteres", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+        else
+        if(jFormattedTextFieldTelefono.getText().contains(" ")){  //Se comprueba que el telefono no contenga espacios
+                JOptionPane.showMessageDialog(this, "El teléfono no puede tener espacios.", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+        else
+        if(numInvalido || jFormattedTextFieldTelefono.getText().length()!=9){//Se comprueba que el telefono contiene como minimo 9 digitos.
+            JOptionPane.showMessageDialog(this, "El teléfono debe ser valido. Nueve numeros enteros seguidos.", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+        else
+        if(jFormattedTextFieldCodigoPostal.getText().contains(" ")){//Se comprueba que el codigo postal no contenga espacios  
+                JOptionPane.showMessageDialog(this, "El código postal no puede tener espacios.", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+        else
+        if(jFormattedTextFieldCodigoPostal.getText().length()!=5||Integer.parseInt(jFormattedTextFieldCodigoPostal.getText())<=0){//Se comprueba que el codigo postal sea correcto, positivo y que tenga 4 cifras.  
+                JOptionPane.showMessageDialog(this, "Introduzca un codigo postal correcto.", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+        else
+        if(jFormattedTextFieldNumero.getText().contains(" ")){//Se comprueba que el numero de la calle no contenga espacios  
+                JOptionPane.showMessageDialog(this, "El número de domicilio no puede tener espacios.", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+        else
+        if(Integer.parseInt(jFormattedTextFieldNumero.getText())<=0){//Se comprueba que el numero de la calle no sea negativo  
+                JOptionPane.showMessageDialog(this, "El numero no puede ser negativo", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+        else{
+        /**
+         * Se atribuyen variables a la informacion introducida por el usuario
+         */
+        try {
+            String calle = jTextFieldCalle.getText();
+            String ciudad = jTextFieldCiudad.getText();
+            int codigoPostal =  Integer.parseInt(jFormattedTextFieldCodigoPostal.getText());
+            int numero= Integer.parseInt(jFormattedTextFieldNumero.getText());
+            String extra = jTextFieldExtra.getText();
+            String nombre = jTextFieldNombre.getText();
+            String correo = jTextFieldCorreoElectronico.getText();
+            String clave = jTextFieldContrasena.getText();
+            int telefono = Integer.parseInt(jFormattedTextFieldTelefono.getText());
+            
+            dir = new Direccion(calle,numero,extra,codigoPostal,ciudad);
+            ArrayList<Producto> carrito = new ArrayList<Producto>();
+            if (tipoDeUsuario.equals("Empresa")) {
+                String cif = jTextFieldCIF.getText();
+                String web = jTextFieldWeb.getText();
+                cli = new ClienteEmpresa(nombre , correo , clave , dir , null , telefono , cif , web,carrito);
         } else {
-            /**
-             * Se atribuyen variables a la informacion introducida por el
-             * usuario
-             */
-            try {
-                String calle = jTextFieldCalle.getText();
-                String ciudad = jTextFieldCiudad.getText();
-                int codigoPostal = Integer.parseInt(jFormattedTextFieldCodigoPostal.getText());
-                int numero = Integer.parseInt(jFormattedTextFieldNumero.getText());
-                String extra = jTextFieldExtra.getText();
-                String nombre = jTextFieldNombre.getText();
-                String correo = jTextFieldCorreoElectronico.getText();
-                String clave = jTextFieldContrasena.getText();
-                int telefono = Integer.parseInt(jFormattedTextFieldTelefono.getText());
-
-                dir = new Direccion(calle, numero, extra, codigoPostal, ciudad);
-                ArrayList<Producto> carrito = new ArrayList<Producto>();
-                if (tipoDeUsuario.equals("Empresa")) {
-                    String cif = jTextFieldCIF.getText();
-                    String web = jTextFieldWeb.getText();
-                    cli = new ClienteEmpresa(nombre, correo, clave, dir, null, telefono, cif, web, carrito);
-                } else {
-                    String dni = jTextFieldDNI.getText();
-                    cli = new ClienteParticular(nombre, correo, clave, dir, null, telefono, dni, carrito);
-                }
-                //lo insertamos en el array
-                if (UtilRegistro.registroCliente(cli)) {
-                    JOptionPane.showMessageDialog(this, "Ha sido registrado correctamente", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
-                    super.setVisible(true);
-                    this.setVisible(false);
-                } else {
-                    JOptionPane.showMessageDialog(this, "Ya estás registrado. Inicia sesión.", "Mensaje", JOptionPane.ERROR_MESSAGE);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                JOptionPane.showMessageDialog(this, "Excepción al registrarse.", "Mensaje", JOptionPane.ERROR_MESSAGE);
-            }
-
-            UtilRegistro.guardarDatos();
+                String dni = jTextFieldDNI.getText();
+            cli = new ClienteParticular(nombre , correo , clave , dir , null , telefono , dni,carrito);
+        }           
+        //lo insertamos en el array
+        if (UtilRegistro.registroCliente(cli)) {
+            JOptionPane.showMessageDialog(this, "Ha sido registrado correctamente", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+            super.setVisible(true);
+            this.setVisible(false);
+        } else {
+            JOptionPane.showMessageDialog(this, "Ya estás registrado. Inicia sesión.", "Mensaje", JOptionPane.ERROR_MESSAGE);
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Excepción al registrarse.", "Mensaje", JOptionPane.ERROR_MESSAGE);        
+        }
+        
+        UtilRegistro.guardarDatos();
         }
     }//GEN-LAST:event_jToggleButtonGuardarActionPerformed
 
@@ -438,20 +490,21 @@ public class Registro extends javax.swing.JDialog {
          */
         Object tipoDeUsuario;
         tipoDeUsuario = jComboBoxEmpresaParticular.getSelectedItem();
-        if (tipoDeUsuario == "Empresa") {
+        if(tipoDeUsuario=="Empresa"){
             jLabelDNI.setVisible(false);
             jTextFieldDNI.setVisible(false);
             jLabelCIF.setVisible(true);
             jTextFieldCIF.setVisible(true);
             jLabelWeb.setVisible(true);
             jTextFieldWeb.setVisible(true);
-        } else if (tipoDeUsuario == "Particular") {
+        }
+        else if(tipoDeUsuario == "Particular"){
             jLabelDNI.setVisible(true);
             jTextFieldDNI.setVisible(true);
             jLabelCIF.setVisible(false);
             jTextFieldCIF.setVisible(false);
             jLabelWeb.setVisible(false);
-            jTextFieldWeb.setVisible(false);
+            jTextFieldWeb.setVisible(false); 
         }
     }//GEN-LAST:event_jComboBoxEmpresaParticularActionPerformed
 
@@ -481,20 +534,20 @@ public class Registro extends javax.swing.JDialog {
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
-            javax.swing.UIManager.setLookAndFeel(new FlatDarkLaf());
-        } catch (Exception e) {
-            System.err.println("Failed to initialize LaF");
+        javax.swing.UIManager.setLookAndFeel(new FlatDarkLaf());
+        } catch (Exception e) { 
+        System.err.println("Failed to initialize LaF");
         }
 
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                System.out.println(info.getName());
-                if ("Flatlaf".equals(info.getName())) {
-                    System.out.println("Flatlaf look and feel stablished");
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
+        for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+            System.out.println(info.getName());
+            if ("Flatlaf".equals(info.getName())) {
+            System.out.println("Flatlaf look and feel stablished");
+            javax.swing.UIManager.setLookAndFeel(info.getClassName());
+            break;
             }
+        }
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
