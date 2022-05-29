@@ -125,6 +125,7 @@ public class MainMenu extends javax.swing.JFrame {
         jLabelCorreoElectronico = new javax.swing.JLabel();
         jButtonCuenta = new javax.swing.JButton();
         jButtonCarrito = new javax.swing.JButton();
+        jLabelLogo = new javax.swing.JLabel();
         jPanelBusqueda = new javax.swing.JPanel();
         jTextFieldBusqueda = new javax.swing.JTextField();
         jButtonCategorias = new javax.swing.JButton();
@@ -234,6 +235,9 @@ public class MainMenu extends javax.swing.JFrame {
         );
 
         jLayeredPaneMain.add(jPanelCuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 0, -1, 70));
+
+        jLabelLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logoMedio.png"))); // NOI18N
+        jLayeredPaneMain.add(jLabelLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, -1, -1));
 
         jPanelBusqueda.setBackground(new java.awt.Color(51, 51, 51));
         jPanelBusqueda.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -485,6 +489,7 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jComboBoxTipoBusqueda;
     private javax.swing.JLabel jLabelCorreoElectronico;
     private javax.swing.JLabel jLabelErrorBusqueda;
+    private javax.swing.JLabel jLabelLogo;
     private javax.swing.JLabel jLabelNombreCuenta;
     private javax.swing.JLayeredPane jLayeredPaneMain;
     private javax.swing.JList<String> jListCategorias;

@@ -115,6 +115,7 @@ public class Registro extends javax.swing.JDialog {
         jTextFieldExtra = new javax.swing.JTextField();
         jLabelExtra = new javax.swing.JLabel();
         jFormattedTextFieldNumero = new javax.swing.JFormattedTextField();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -211,47 +212,12 @@ public class Registro extends javax.swing.JDialog {
             }
         });
 
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logoMini.png"))); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(31, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelCorreoElectronico)
-                    .addComponent(jLabelContrasena)
-                    .addComponent(jLabelCalle)
-                    .addComponent(jLabelTelefono)
-                    .addComponent(jLabelNombre)
-                    .addComponent(jLabelCodigoPostal)
-                    .addComponent(jLabelCiudad)
-                    .addComponent(jLabelWeb)
-                    .addComponent(jLabelTieneCuentaPregunta)
-                    .addComponent(jLabelNumero)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabelCIF)
-                            .addComponent(jLabelTipoDeUsuario)
-                            .addComponent(jLabelDNI)))
-                    .addComponent(jLabelExtra))
-                .addGap(95, 95, 95)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextFieldDNI, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
-                    .addComponent(jButtonLogIn, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
-                    .addComponent(jTextFieldWeb, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
-                    .addComponent(jComboBoxEmpresaParticular, 0, 130, Short.MAX_VALUE)
-                    .addComponent(jTextFieldCIF)
-                    .addComponent(jTextFieldNombre)
-                    .addComponent(jTextFieldCorreoElectronico)
-                    .addComponent(jTextFieldContrasena)
-                    .addComponent(jTextFieldCalle)
-                    .addComponent(jFormattedTextFieldTelefono)
-                    .addComponent(jTextFieldCiudad)
-                    .addComponent(jFormattedTextFieldCodigoPostal)
-                    .addComponent(jTextFieldExtra)
-                    .addComponent(jFormattedTextFieldNumero))
-                .addGap(24, 24, 24))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -261,11 +227,53 @@ public class Registro extends javax.swing.JDialog {
                         .addGap(117, 117, 117)
                         .addComponent(jToggleButtonGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(31, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelCorreoElectronico)
+                            .addComponent(jLabelContrasena)
+                            .addComponent(jLabelCalle)
+                            .addComponent(jLabelTelefono)
+                            .addComponent(jLabelNombre)
+                            .addComponent(jLabelCodigoPostal)
+                            .addComponent(jLabelCiudad)
+                            .addComponent(jLabelWeb)
+                            .addComponent(jLabelTieneCuentaPregunta)
+                            .addComponent(jLabelNumero)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(3, 3, 3)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabelCIF)
+                                    .addComponent(jLabelTipoDeUsuario)
+                                    .addComponent(jLabelDNI)))
+                            .addComponent(jLabelExtra))
+                        .addGap(95, 95, 95)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTextFieldDNI, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
+                            .addComponent(jButtonLogIn, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
+                            .addComponent(jTextFieldWeb, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
+                            .addComponent(jComboBoxEmpresaParticular, 0, 130, Short.MAX_VALUE)
+                            .addComponent(jTextFieldCIF)
+                            .addComponent(jTextFieldNombre)
+                            .addComponent(jTextFieldCorreoElectronico)
+                            .addComponent(jTextFieldContrasena)
+                            .addComponent(jTextFieldCalle)
+                            .addComponent(jFormattedTextFieldTelefono)
+                            .addComponent(jTextFieldCiudad)
+                            .addComponent(jFormattedTextFieldCodigoPostal)
+                            .addComponent(jTextFieldExtra)
+                            .addComponent(jFormattedTextFieldNumero))))
+                .addGap(24, 24, 24))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelRegistro)
                 .addGap(14, 14, 14)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -325,7 +333,7 @@ public class Registro extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelTieneCuentaPregunta, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonLogIn))
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -580,6 +588,7 @@ public class Registro extends javax.swing.JDialog {
     private javax.swing.JFormattedTextField jFormattedTextFieldCodigoPostal;
     private javax.swing.JFormattedTextField jFormattedTextFieldNumero;
     private javax.swing.JFormattedTextField jFormattedTextFieldTelefono;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelCIF;
     private javax.swing.JLabel jLabelCalle;
     private javax.swing.JLabel jLabelCiudad;
