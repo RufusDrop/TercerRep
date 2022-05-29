@@ -6,10 +6,10 @@ import java.util.Date;
 public class Tarjeta implements Serializable {
 
     private String nombreTitular;
-    private int numero;
+    private long numero;
     private Date fecha;
 
-    public Tarjeta(String nombreTitular, int numero, Date fecha) {
+    public Tarjeta(String nombreTitular, long numero, Date fecha) {
         this.nombreTitular = nombreTitular;
         this.numero = numero;
         this.fecha = fecha;
@@ -28,11 +28,11 @@ public class Tarjeta implements Serializable {
         this.nombreTitular = nombreTitular;
     }
 
-    public int getNumero() {
+    public long getNumero() {
         return numero;
     }
 
-    public void setNumero(int numero) {
+    public void setNumero(long numero) {
         this.numero = numero;
     }
 
@@ -53,7 +53,7 @@ public class Tarjeta implements Serializable {
      * @param tar_fechaCad
      * @return boolean
      */
-    public static boolean modificaTarjeta(Tarjeta tar, String tar_titular, int tar_numTarj, Date tar_fechaCad) {
+    public static boolean modificaTarjeta(Tarjeta tar, String tar_titular, long tar_numTarj, Date tar_fechaCad) {
         tar.setNombreTitular(tar_titular);
         tar.setNumero(tar_numTarj);
         tar.setFecha(tar_fechaCad);

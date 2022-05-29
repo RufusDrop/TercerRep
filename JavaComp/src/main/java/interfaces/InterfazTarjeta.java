@@ -5,6 +5,8 @@ import classes.Tarjeta;
 import classes.UtilRegistro;
 import javax.swing.JOptionPane;
 import static interfaces.Login.objcli;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 
 
@@ -31,8 +33,8 @@ public class InterfazTarjeta extends javax.swing.JDialog {
     public String getjTextFieldTitularCuenta(){
         return jTextFieldTitularDeLaCuenta.getText();
     }
-    public int getjFormattedTextFieldNumero(){
-        return Integer.valueOf(jFormattedTextFieldNumeroDeTarjeta.getText());
+    public long getjFormattedTextFieldNumero(){
+        return Long.parseLong(jFormattedTextFieldNumeroDeTarjeta.getText());
     }
     public Date getjFormattedTextFieldFechaCaducidad(){
         return (Date) jFormattedTextFieldFechaDeCaducidad.getValue();
@@ -40,12 +42,18 @@ public class InterfazTarjeta extends javax.swing.JDialog {
     public void setjTextFieldTitularCuenta(String txt){
         jTextFieldTitularDeLaCuenta.setText(txt);
     }
-    public void setjFormattedTextFieldNumero(int num){
+    public void setjFormattedTextFieldNumero(long num){
         jFormattedTextFieldNumeroDeTarjeta.setValue(num);
     }
     public void setjFormattedTextFieldFechacaducidad(String txt){
         jFormattedTextFieldFechaDeCaducidad.setText(txt);
     }
+    //Convierte un Date a Localdate
+    public LocalDate convertToLocalDateViaInstant(Date dateToConvert) {
+    return dateToConvert.toInstant()
+      .atZone(ZoneId.systemDefault())
+      .toLocalDate();
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -189,6 +197,10 @@ public class InterfazTarjeta extends javax.swing.JDialog {
         else
         if(jFormattedTextFieldFechaDeCaducidad.getText().contains(" ")){//Comprobamos que la fecha de caducidad no contiene espacios
             JOptionPane.showMessageDialog(this, "Introduce el número de la tarjeta sin espacios", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+        else
+        if(convertToLocalDateViaInstant((Date) jFormattedTextFieldFechaDeCaducidad.getValue()).isBefore(LocalDate.now())){//Comprobamos que la tarjeta no ha caducado
+            JOptionPane.showMessageDialog(this, "Su tarjeta está caducada", "Error", JOptionPane.WARNING_MESSAGE);
         }
         else{
         Tarjeta tarj = objcli.getTarjeta();
