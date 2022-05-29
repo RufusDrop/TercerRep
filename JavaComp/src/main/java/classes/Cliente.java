@@ -83,7 +83,11 @@ public abstract class Cliente implements Serializable {
     public void setCarrito(ArrayList<Producto> carrito) {
         this.carrito = carrito;
     }
-
+    /**
+     * Este modulo permite añadir productos al carrito
+     * @param producto
+     * @return 
+     */
     public boolean addToCarrito(Producto producto) {
         if (producto == null) {
             return false;
@@ -93,7 +97,11 @@ public abstract class Cliente implements Serializable {
         }
 
     }
-
+    /**
+     * Este modulo permite eliminar productos del carrito
+     * @param producto
+     * @return 
+     */
     public boolean removeFromCarrito(Producto producto) {
         if (producto == null) {
             return false;
@@ -104,7 +112,9 @@ public abstract class Cliente implements Serializable {
             return false;
         }
     }
-
+    /**
+     * Este modulo permite eliminar todos los productos del carrito
+     */
     public void clearCarrito() {
         carrito.clear();
     }

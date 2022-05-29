@@ -63,7 +63,7 @@ public class UtilRegistro {
     }
 
     /**
-     * Modifica los datos de una persona
+     * Modifica los datos de un cliente
      *
      * @param cli
      * @param cli_nombre

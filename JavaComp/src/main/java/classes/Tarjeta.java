@@ -45,7 +45,7 @@ public class Tarjeta implements Serializable {
     }
 
     /**
-     * Modifica los datos de una persona
+     * Modifica los datos de una tarjeta
      *
      * @param tar
      * @param tar_titular

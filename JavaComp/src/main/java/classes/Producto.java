@@ -97,8 +97,8 @@ public class Producto implements Serializable {
     }
 
     /**
-     *
-     * @return DEvuelve la media de las calificaciones de las opiniones
+     * Devuelve la media de las calificaciones de las opiniones
+     * @return 
      */
     public double getOpinionMedia() {
 
@@ -118,13 +118,16 @@ public class Producto implements Serializable {
     }
 
     /**
-     *
      * Se añade una opinion a la lista asegurandose de que no se repita
+     * @param opinion 
      */
     public void addOpinion(Opinion opinion) {
         opiniones.add(opinion);
     }
-
+    /**
+     * Se elimina una opinión de la lista 
+     * @param opinion 
+     */
     public void removeOpinion(Opinion opinion) {
         opiniones.remove(opinion);
     }
